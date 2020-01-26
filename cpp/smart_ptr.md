@@ -109,7 +109,7 @@ assert(!human);  // human holds nullptr
 [`std::move()`](https://en.cppreference.com/w/cpp/utility/move), is an STL
 function (defined in `<utility>`) that allows you to activate an object's [move
 assignment operator.](https://en.wikipedia.org/wiki/Move_assignment_operator)
-(Formally, it converts the object into an [rvalue reference.](move_semantics.md))
+(Formally, it converts the object into an [rvalue reference.](move_semantics/README.md))
 While a copy-assignment operator (like the one taught in EECS 280) typically
 copies each member of the "right-hand-side" object into the left-hand-side,
 a _move-assignment_ operator "steals" the contents of the RHS and puts them in
