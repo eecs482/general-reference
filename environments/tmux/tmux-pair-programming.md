@@ -1,5 +1,5 @@
 # Tmux Remote Pair Programming
-This guide aims to get you familiar with using `tmux`, a "terminal multiplexor" to pair program with others remotely. It is especially useful if your group prefers terminal-bassed text editors like `(n)vim`, `emacs` or `nano`. It is also useful to share access to multiple terminals.
+This guide aims to get you familiar with using `tmux`, a "terminal multiplexor" to pair program with others remotely. It is especially useful if your group prefers terminal-based text editors like `(n)vim`, `emacs` or `nano`. It is also useful to share access to multiple terminals.
 
 ## Using `tmux` in CAEN
 Since CAEN is the only officially supported environment and remote access to a CAEN terminal is relatively straightforward, this guide will focus on pair programming on CAEN. Many of the steps are the same for local use as well, but you will have to enable SSH access to your computer, which usually involves setting up Port Forwarding on your router.
@@ -25,7 +25,7 @@ Now, the host, Alice, should run `./tmux-3.1b-x86_64.AppImage -S /tmp/$(whoami) 
 
 ### Step 3: Bob attaches to Alice's session
 Now, Bob can attach to Alice's session, and effectively plug in his keyboard to her terminal(s).
-To do so, he should run `./tmux-3.1b-x86_64.AppImage -S /tmp/<Alice's uniqname> -t shared`
+To do so, he should run `./tmux-3.1b-x86_64.AppImage -S /tmp/<Alice's uniqname> attach -t shared`
 
 ### Step 4: Profit
 You'll want some way to ensure 2 or 3 of you don't try to type at the same time, as everyone is tied to the same session. This mirrors pair programming in real life, where there is only one keyboard.
