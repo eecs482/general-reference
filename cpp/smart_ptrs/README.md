@@ -64,7 +64,7 @@ What if it was literally just:
 
 ```cpp
 // make a simple or human player
-Player* Player_factry(const std::string& name, const std::string& strategy);
+Player* Player_factory(const std::string& name, const std::string& strategy);
 ```
 
 Then you have no idea (without looking at the function definition) whether
