@@ -1,8 +1,8 @@
-# C++11 Smart Pointers
+# Smart Pointers
 
 ## Intro
 One of the most valuable features introduced by C++11 (that you've been
-forbidden from using in EECS 280/281) is C++11 smart pointers, which are
+forbidden from using in EECS 280/281) is smart pointers, which are
 RAII-based wrappers around "raw", dynamically allocated pointers.
 
 280 uses raw pointers, allocated through `new` and `delete`, because they're
@@ -14,7 +14,7 @@ management if you don't need to.
 
 Bjarne Strousup, creator of the C++ language, actually discourages using "raw"
 pointers (with explicit calls to `new` and `delete`) in production code;
-instead, he recommends using the C++11 smart pointer types declared in the
+instead, he recommends using the smart pointer types declared in the
 `<memory>` header. Google's style guide, likewise, [recommends using smart
 pointers](https://google.github.io/styleguide/cppguide.html#Ownership_and_Smart_Pointers)
 instead of "raw" pointers.
@@ -64,7 +64,7 @@ What if it was literally just:
 
 ```cpp
 // make a simple or human player
-Player* Palyer_factry(const std::string& name, const std::string& strategy);
+Player* Player_factry(const std::string& name, const std::string& strategy);
 ```
 
 Then you have no idea (without looking at the function definition) whether
@@ -91,17 +91,14 @@ When the `unique_ptr` goes out of scope, the wrapped pointer is `delete`d by the
 You would use it something like this:
 
 ```cpp
-vector<unique_ptr<Player>> game_players;
+std::vector<std::unique_ptr<Player>> game_players;
 
 // ...
 
 // looks like you're going to the shadow realm, jimbo
-unique_ptr<Player> human = Player_factory("Hugh Neutron", "Human");
+std::unique_ptr<Player> human = Player_factory("Hugh Neutron", "Human");
 
 game_players.emplace_back(std::move(human));
-// OR, assume that game_players is filled with unique_ptr(nullptr),
-unique_ptr<Player>& back = game_players.back();
-back = std::move(human);
 
 assert(!human);  // human holds nullptr
 ```
@@ -109,7 +106,7 @@ assert(!human);  // human holds nullptr
 [`std::move()`](https://en.cppreference.com/w/cpp/utility/move), is an STL
 function (defined in `<utility>`) that allows you to activate an object's [move
 assignment operator.](https://en.wikipedia.org/wiki/Move_assignment_operator)
-(Formally, it converts the object into an [rvalue reference.](move_semantics/README.md))
+(Formally, it converts the object into an [rvalue reference.](../move_semantics/README.md))
 While a copy-assignment operator (like the one taught in EECS 280) typically
 copies each member of the "right-hand-side" object into the left-hand-side,
 a _move-assignment_ operator "steals" the contents of the RHS and puts them in
@@ -190,9 +187,9 @@ And you don't need to rely on move-assignment, since `std::shared_ptr` can be
 copy-assigned and copy-constructed.
 
 ```cpp
-vector<shared_ptr<Player>> game_players;
+std::vector<std::shared_ptr<Player>> game_players;
 
-shared_ptr<Player> human = Player_factory("Hugh Neutron", "Human");
+std::shared_ptr<Player> human = Player_factory("Hugh Neutron", "Human");
 game_players.emplace_back(human);
 // OR just,
 game_players.push_back(human);
@@ -200,7 +197,7 @@ game_players.push_back(human);
 assert(game_players.back() == human);  // true
 
 // OR, assume that game_players is filled with shared_ptr(nullptr),
-shared_ptr<Player>& back = game_players.back();
+std::shared_ptr<Player>& back = game_players.back();
 back = human;
 ```
 
@@ -231,18 +228,18 @@ Let's say that `HumanPlayer` looked like:
 ```cpp
 class HumanPlayer : public Player
 {
-        std::string name;
+    std::string name;
 
-        std::vector<Card> hand;
+    std::vector<Card> hand;
 
-        // don't you know you are my very...
-        std::shared_ptr<Player> best_friend;
+    // don't you know you are my very...
+    std::shared_ptr<Player> best_friend;
 
 public:
 
-        void set_best_friend(std::shared_ptr<Player> fren) {
-            best_friend = fren;
-        }
+    void set_best_friend(std::shared_ptr<Player> fren) {
+        best_friend = fren;
+    }
 ```
 
 And that we did something like this:
@@ -314,7 +311,7 @@ general case.
 
 ## Summary
 
-- C++11 smart pointers, defined in `<memory>`, are the industry-preferred method
+- C++ smart pointers, defined in `<memory>`, are the industry-preferred method
   for managing pointers to dynamically-allocated memory.
 - Use `unique_ptr` if you need a single, discrete object, but need a pointer
   for whatever reason (e.g. polymorphism, object can't be default-initialized
